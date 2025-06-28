@@ -2,8 +2,7 @@ import { Model } from "mongoose";
 
 export const USER_ROLE = {
   user: "user",
-  admin: "admin",
-  superAdmin: "superAdmin",
+  manager: "manager",
 } as const;
 export interface TUser {
   _id?: any;
@@ -15,7 +14,7 @@ export interface TUser {
   status: "in-progress" | "blocked";
   isActive?: boolean;
 }
-
+export type TUserRole = keyof typeof USER_ROLE;
 export interface UserModelType extends Model<TUser> {
   verifyUser(email: string): Promise<TUser>;
   comparePassword(

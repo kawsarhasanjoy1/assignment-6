@@ -16,11 +16,17 @@ const http_status_codes_1 = require("http-status-codes");
 const services_1 = require("./services");
 const userLogin = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    const result = yield services_1.authServices.loginUser(data);
+    const { accessToken, refreshToken } = yield services_1.authServices.loginUser(data);
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax", // or "none" if cross-origin
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_codes_1.StatusCodes.CREATED,
         message: "user login successful",
-        data: result,
+        data: { accessToken },
     });
 }));
 exports.authController = {

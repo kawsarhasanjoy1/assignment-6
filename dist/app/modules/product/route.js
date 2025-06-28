@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.eyeglassRoutes = void 0;
+const express_1 = require("express");
+const controller_1 = require("./controller");
+const router = (0, express_1.Router)();
+router.post("/", /*auth(),*/ controller_1.eyeglassController.createEyeglass);
+router.get("/", /*auth(),*/ controller_1.eyeglassController.getAllEyeglasses);
+router.get("/:id", /*auth(),*/ controller_1.eyeglassController.getSingleEyeglass);
+router.patch("/:id", /*auth(),*/ controller_1.eyeglassController.updateEyeglass);
+router.delete("/:id", /*auth(),*/ controller_1.eyeglassController.deleteEyeglass);
+exports.eyeglassRoutes = router;
